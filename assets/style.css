@@ -1,0 +1,24 @@
+#location {
+	border-style: solid;
+	height: 120px;
+}
+
+#access {
+	border-style: solid;
+	height: 120px;
+}
+
+#weather {
+	border-style: solid;
+	height: 70px;
+}
+
+#gmap {
+	border-style: solid;
+	height: 300px;
+}
+
+#comment {
+	border-style: solid;
+	height: 150px;
+}

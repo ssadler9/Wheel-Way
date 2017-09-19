@@ -36,7 +36,7 @@
     </div>	
 
 	<div class='row'>
-		<div id='gmap' class='col-md-12'>
+		<div id='map' class='col-md-12'>
 		Google Maps
 		</div>
 	</div>
@@ -50,11 +50,14 @@
 
 
 <script>
+
+  
+
   	function initMap() {
       
 
       	var uluru = {lat: 30.286235, lng: -97.739396};
-        var map = new google.maps.Map(document.getElementById('gmap'), {
+        var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 15,
           center: uluru
         });
@@ -64,7 +67,9 @@
           position: uluru,	
           map: map
         });
+         
     }
+   
 </script>
 </body>
 </html>

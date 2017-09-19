@@ -9,4 +9,17 @@
   };
   firebase.initializeApp(config);
 
-var database = firebase.database();
+
+
+
+var update_timeout = null;
+
+google.maps.event.addListener(map, 'click', function(event){
+    update_timeout = setTimeout(function(){
+        do_something_here();
+    }, 200);        
+});
+
+google.maps.event.addListener(map, 'dblclick', function(event) {       
+    clearTimeout(update_timeout);
+});

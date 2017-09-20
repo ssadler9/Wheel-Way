@@ -8,13 +8,17 @@
 	<link rel="stylesheet" type="text/css" href="../project1/assets/style.css">
 	<!-- Firebase -->
 	<script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
-	<!-- Javascript -->
-	<script type="text/javascript" href="../project1/assets/java.js"></script>
 	<!-- Google Maps API Key -->
 	<script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAl8zOPN90ABQR-SpfhltPEL0ir3-8ajcQ&callback=initMap">
     </script>
-    <!-- Google Location Setter API -->
+  <!--jQuery-->
+  <script
+    src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous">  
+  </script>
+    
 
 </head>
 <body>
@@ -29,10 +33,15 @@
         </div>
     </div>
 
-    <div class='row'>
-    	<div id='weather' class='col-md-12'>
-    	Weather Forecast
-    	</div>
+    <div id='weather' class='row'>
+      <div class='col-md-6'>
+       <h4 id='city'></h4>
+       <h4 id='temp'>°F</h4>
+      </div>
+      <div class='col-md-6'>
+       <h4 id='description'></h4>
+       <img id='weather_img' src=''>
+      </div>
     </div>	
 
 	<div class='row'>
@@ -48,9 +57,9 @@
 	</div>		
 </div>
 
-
+<!-- Google Location Setter API -->
 <script>
-  	function initMap() {
+    function initMap() {
       
 
       	var uluru = {lat: 30.286235, lng: -97.739396};
@@ -66,5 +75,7 @@
         });
     }
 </script>
+<!-- Javascript -->
+<script type="text/javascript" src="assets/java.js"></script>
 </body>
 </html>

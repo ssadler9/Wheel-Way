@@ -19,24 +19,21 @@ console.log(database);
 // labels and labelindex set for pins on google mpas
       var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
       var labelIndex = 0;
-// functoin that displays the map
+// function that displays the map
     function initMap() {
 
-      // Copied from Google to make navigation apper
-      // ===
       var markerArray = [];
       // Instantiate a directions service.
       var directionsService = new google.maps.DirectionsService;
-      // ===
 
+      // adding center location to UT Tower
       var bangalore = { lat: 30.286235, lng: -97.739396 };
          map = new google.maps.Map(document.getElementById('gmap'), {
           zoom: 15,
           center: bangalore
         });
 
-//copied from google for navigation
-         // ===
+
          // Create a renderer for directions and bind it to the map.
         var directionsDisplay = new google.maps.DirectionsRenderer({map: map});
         // Instantiate an info window to hold step text.
@@ -48,7 +45,7 @@ console.log(database);
           calculateAndDisplayRoute(
               directionsDisplay, directionsService, markerArray, stepDisplay, map);
         };
-         // ===
+
 
         // This event listener calls addMarker() when the map is clicked.
         google.maps.event.addListener(map, 'click', function(event) {
@@ -71,7 +68,7 @@ console.log(database);
           map: map
           });
       }  
-// rest of code from google for navigation
+        // rest of code from google for navigation
       function calculateAndDisplayRoute(directionsDisplay, directionsService,
           markerArray, stepDisplay, map) {
         // First, remove any existing markers from the map.

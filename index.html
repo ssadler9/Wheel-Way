@@ -8,18 +8,15 @@
 	<link rel="stylesheet" type="text/css" href="../project1/assets/style.css">
 	<!-- Firebase -->
 	<script src="https://www.gstatic.com/firebasejs/4.3.1/firebase.js"></script>
+	<!-- jQuery -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+	<!-- Javascript -->
+	<script type="text/javascript" src="../project1/assets/java.js"></script>
 	<!-- Google Maps API Key -->
 	<script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAl8zOPN90ABQR-SpfhltPEL0ir3-8ajcQ&callback=initMap">
     </script>
-  <!--jQuery-->
-  <script
-    src="https://code.jquery.com/jquery-3.2.1.js"
-  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
-  crossorigin="anonymous">  
-  </script>
-    
-
+  
 </head>
 <body>
 <div class='container'>
@@ -45,9 +42,27 @@
     </div>	
 
 	<div class='row'>
+		<div id="floating-panel">
+			<b>Start: </b>
+		    <select id="start">
+		      <option value="ut tower, austin, tx">UT Tower</option>
+		      <option value="lbj library, austin, tx">LBJ Library</option>
+		      <option value="snarfs, austin, tx">Snarf's</option>
+		      <option value="DK Royal Stadium, austin, tx">UT Stadium</option>
+		      <option value="Moody College of Communication, austin, tx">College of Communication</option>
+		    </select>
+		    <b>End: </b>
+		    <select id="end">
+		      <option value="snarfs, austin, tx">Snarf's</option>
+		      <option value="ut tower, austin, tx">UT Tower</option>
+		      <option value="lbj library, austin, tx">LBJ Library</option>
+		      <option value="DK Royal Stadium, austin, tx">UT Stadium</option>
+		      <option value="Moody College of Communication, austin, tx">College of Communication</option>
+		    </select>
+		</div>    
 		<div id='gmap' class='col-md-12'>
-		Google Maps
 		</div>
+		<div id="warnings-panel"></div>
 
 	</div>
 	
@@ -58,9 +73,5 @@
 	</div>		
 </div>
 
-
-
-<!-- Javascript -->
-<script type="text/javascript" src="assets/java.js"></script>
 </body>
 </html>

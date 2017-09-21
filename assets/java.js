@@ -10,12 +10,15 @@
   firebase.initializeApp(config);
 // storing firebase inside variable
 var database = firebase.database();
-console.log(database);
+//console.log(database);
 
+<<<<<<< HEAD
 var database = firebase.database();
 // ====
 
 // ===
+=======
+>>>>>>> 15e88f83e9a8bf3ec609e34ea647a1edc805c45e
 
 // Weather API/AJAX call
 var weatherAPIKey = "a910455ef73b594f1148b29789a79ba8";
@@ -27,8 +30,8 @@ $.ajax({
   method: "GET"
 })
 .done(function(response) {
-  console.log(queryURL);
-  console.log(response);
+  //console.log(queryURL);
+  //console.log(response);
 
   $("#city").html(response.name);
   $("#description").html(response.weather[0].description);
@@ -48,10 +51,10 @@ $.ajax({
       var directionsService = new google.maps.DirectionsService;
 
       // adding center location to UT Tower
-      var bangalore = { lat: 30.286235, lng: -97.739396 };
+      var utTower = { lat: 30.286235, lng: -97.739396 };
          map = new google.maps.Map(document.getElementById('gmap'), {
           zoom: 15,
-          center: bangalore
+          center: utTower
         });
 
 
@@ -70,10 +73,13 @@ $.ajax({
 
         // This event listener calls addMarker() when the map is clicked.
         google.maps.event.addListener(map, 'click', function(event) {
-          addMarker(event.latLng, map);
+          addMarker({
+            lat: event.latLng.lat(),
+            lng: event.latLng.lng()
+          }, map);
         });
         // Add a marker at the center of the map.
-        addMarker(bangalore, map);
+        addMarker(utTower, map);
 
         // copied from google for navigation
         document.getElementById('start').addEventListener('change', onChangeHandler);
@@ -87,10 +93,26 @@ $.ajax({
           position: location,
           label: labels[labelIndex++ % labels.length],
           map: map
+<<<<<<< HEAD
           });
 
       }
       console.log(location);  
+=======
+        });
+
+        // store the lat/lng into firebase
+        //console.log(location);
+       // console.log(location.lat, location.lng);
+
+        database.ref().push({
+          lat: location.lat,
+          lng: location.lng
+        })
+
+
+      }  
+>>>>>>> 15e88f83e9a8bf3ec609e34ea647a1edc805c45e
         // rest of code from google for navigation
       function calculateAndDisplayRoute(directionsDisplay, directionsService,
           markerArray, stepDisplay, map) {
@@ -141,3 +163,17 @@ $.ajax({
           stepDisplay.open(map, marker);
         });
       }
+
+      // Add to firebase 
+      database.ref().on("child_added", function(childSnapshot) {
+        //console.log(childSnapshot);
+        var droppedPin = childSnapshot.val();
+        console.log(droppedPin);
+        var point = new google.maps.LatLng(droppedPin);
+        console.log(point);
+        markerArray.getData().push(point);
+        $("#gmap").append(droppedPin);
+      })
+
+
+      // need a function that loops thru pins and appends to page

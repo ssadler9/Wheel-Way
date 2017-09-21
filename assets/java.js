@@ -1,5 +1,3 @@
-$( document ).ready(function() {
-
 // Initialize Firebase
   var config = {
     apiKey: "AIzaSyCjr7ERSIfJac4JLYwoRPnxlsgawaArVCs",
@@ -141,9 +139,3 @@ $.ajax({
           stepDisplay.open(map, marker);
         });
       }
-         
-        
-    
-});
-
-

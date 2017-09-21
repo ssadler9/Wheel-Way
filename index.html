@@ -16,8 +16,7 @@
 	<script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAl8zOPN90ABQR-SpfhltPEL0ir3-8ajcQ&callback=initMap">
     </script>
-    
-
+  
 </head>
 <body>
 <div class='container'>
@@ -31,10 +30,15 @@
         </div>
     </div>
 
-    <div class='row'>
-    	<div id='weather' class='col-md-12'>
-    	Weather Forecast
-    	</div>
+    <div id='weather' class='row'>
+      <div class='col-md-6'>
+       <h4 id='city'></h4>
+       <h4 id='temp'>°F</h4>
+      </div>
+      <div class='col-md-6'>
+       <h4 id='description'></h4>
+       <img id='weather_img' src=''>
+      </div>
     </div>	
 
 	<div class='row'>

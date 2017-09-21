@@ -48,6 +48,7 @@
 		<div id='gmap' class='col-md-12'>
 		Google Maps
 		</div>
+
 	</div>
 	
 	<div class='row'>
@@ -57,24 +58,8 @@
 	</div>		
 </div>
 
-<!-- Google Location Setter API -->
-<script>
-    function initMap() {
-      
-
-      	var uluru = {lat: 30.286235, lng: -97.739396};
-        var map = new google.maps.Map(document.getElementById('gmap'), {
-          zoom: 15,
-          center: uluru
-        });
 
 
-        var marker = new google.maps.Marker({
-          position: uluru,	
-          map: map
-        });
-    }
-</script>
 <!-- Javascript -->
 <script type="text/javascript" src="assets/java.js"></script>
 </body>

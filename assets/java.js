@@ -13,6 +13,9 @@ var database = firebase.database();
 console.log(database);
 
 var database = firebase.database();
+// ====
+
+// ===
 
 // Weather API/AJAX call
 var weatherAPIKey = "a910455ef73b594f1148b29789a79ba8";
@@ -33,9 +36,6 @@ $.ajax({
   $("#temp").prepend(response.main.temp);
 
 })
-
-
-
 
 // labels and labelindex set for pins on google mpas
       var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -88,7 +88,9 @@ $.ajax({
           label: labels[labelIndex++ % labels.length],
           map: map
           });
-      }  
+
+      }
+      console.log(location);  
         // rest of code from google for navigation
       function calculateAndDisplayRoute(directionsDisplay, directionsService,
           markerArray, stepDisplay, map) {

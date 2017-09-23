@@ -116,7 +116,7 @@ $.ajax({
       })
    
 
-
+    // }
 
         // rest of code from google for navigation
       function calculateAndDisplayRoute(directionsDisplay, directionsService,

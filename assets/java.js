@@ -12,13 +12,6 @@
 var database = firebase.database();
 //console.log(database);
 
-<<<<<<< HEAD
-var database = firebase.database();
-// ====
-
-// ===
-=======
->>>>>>> 15e88f83e9a8bf3ec609e34ea647a1edc805c45e
 
 // Weather API/AJAX call
 var weatherAPIKey = "a910455ef73b594f1148b29789a79ba8";
@@ -93,26 +86,38 @@ $.ajax({
           position: location,
           label: labels[labelIndex++ % labels.length],
           map: map
-<<<<<<< HEAD
           });
+        console.log(marker.label);
 
-      }
-      console.log(location);  
-=======
-        });
+      
+     console.log(location);
 
         // store the lat/lng into firebase
-        //console.log(location);
-       // console.log(location.lat, location.lng);
-
         database.ref().push({
           lat: location.lat,
-          lng: location.lng
+          lng: location.lng,
+          marker: marker.label,
         })
 
+      }
 
-      }  
->>>>>>> 15e88f83e9a8bf3ec609e34ea647a1edc805c45e
+     
+      database.ref().on('child_added', function (snapshot) { 
+        // pulling pins from database and assign to varible
+        var barLat = snapshot.val().lat;
+        var barLng = snapshot.val().lng;
+        var location = {lat: barLat, lng: barLng};
+        var marker = new google.maps.Marker({
+          position: location,
+          label: labels[labelIndex++ % labels.length],
+          map: map
+        });
+
+      })
+   
+
+
+
         // rest of code from google for navigation
       function calculateAndDisplayRoute(directionsDisplay, directionsService,
           markerArray, stepDisplay, map) {
@@ -164,16 +169,9 @@ $.ajax({
         });
       }
 
-      // Add to firebase 
-      database.ref().on("child_added", function(childSnapshot) {
-        //console.log(childSnapshot);
-        var droppedPin = childSnapshot.val();
-        console.log(droppedPin);
-        var point = new google.maps.LatLng(droppedPin);
-        console.log(point);
-        markerArray.getData().push(point);
-        $("#gmap").append(droppedPin);
-      })
 
 
-      // need a function that loops thru pins and appends to page
+
+
+
+

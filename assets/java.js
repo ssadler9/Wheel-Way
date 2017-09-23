@@ -107,7 +107,7 @@ $.ajax({
           map: map
         });
         console.log(location);
-        console.log(marker);
+       console.log()
 
       })
 
@@ -140,20 +140,6 @@ $.ajax({
         });
       }
 
-  // Commented out steps to clear up navigation screen
-      // function showSteps(directionResult, markerArray, stepDisplay, map) {
-      //   // For each step, place a marker, and add the text to the marker's infowindow.
-      //   // Also attach the marker to an array so we can keep track of it and remove it
-      //   // when calculating new routes.
-      //   var myRoute = directionResult.routes[0].legs[0];
-      //   for (var i = 0; i < myRoute.steps.length; i++) {
-      //     var marker = markerArray[i] = markerArray[i] || new google.maps.Marker;
-      //     marker.setMap(map);
-      //     marker.setPosition(myRoute.steps[i].start_location);
-      //     attachInstructionText(
-      //         stepDisplay, marker, myRoute.steps[i].instructions, map);
-      //   }
-      // }
 
       function attachInstructionText(stepDisplay, marker, text, map) {
         google.maps.event.addListener(marker, 'click', function() {

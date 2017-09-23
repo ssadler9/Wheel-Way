@@ -23,8 +23,6 @@ $.ajax({
   method: "GET"
 })
 .done(function(response) {
-  //console.log(queryURL);
-  //console.log(response);
 
   $("#city").html(response.name);
   $("#description").html(response.weather[0].description);
@@ -36,10 +34,10 @@ $.ajax({
 // labels and labelindex set for pins on google mpas
       var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
       var labelIndex = 0;
+      var markerArray = [];
 // function that displays the map
     function initMap() {
 
-      var markerArray = [];
       // Instantiate a directions service.
       var directionsService = new google.maps.DirectionsService;
 
@@ -72,35 +70,31 @@ $.ajax({
           }, map);
         });
         // Add a marker at the center of the map.
-        addMarker(utTower, map);
+        // addMarker(utTower, map);
 
         // copied from google for navigation
         document.getElementById('start').addEventListener('change', onChangeHandler);
         document.getElementById('end').addEventListener('change', onChangeHandler);
       }
+
       // Adds a marker to the map.
       function addMarker(location, map) {
         // Add the marker at the clicked location, and add the next-available label
         // from the array of alphabetical characters.
         var marker = new google.maps.Marker({
           position: location,
-          label: labels[labelIndex++ % labels.length],
+          // label: labels[labelIndex++ % labels.length],
           map: map
           });
-        console.log(marker.label);
-
-      
-     console.log(location);
 
         // store the lat/lng into firebase
         database.ref().push({
           lat: location.lat,
           lng: location.lng,
-          marker: marker.label,
+          // marker: marker.label,
         })
 
       }
-
      
       database.ref().on('child_added', function (snapshot) { 
         // pulling pins from database and assign to varible
@@ -109,14 +103,13 @@ $.ajax({
         var location = {lat: barLat, lng: barLng};
         var marker = new google.maps.Marker({
           position: location,
-          label: labels[labelIndex++ % labels.length],
+          // label: labels[labelIndex++ % labels.length],
           map: map
         });
+        console.log(location);
+        console.log(marker);
 
       })
-   
-
-    // }
 
         // rest of code from google for navigation
       function calculateAndDisplayRoute(directionsDisplay, directionsService,
@@ -139,26 +132,28 @@ $.ajax({
             document.getElementById('warnings-panel').innerHTML =
                 '<b>' + response.routes[0].warnings + '</b>';
             directionsDisplay.setDirections(response);
-            showSteps(response, markerArray, stepDisplay, map);
+        // commented out line 136 to clear remainder of errors from showSteps
+            // showSteps(response, markerArray, stepDisplay, map);
           } else {
             window.alert('Directions request failed due to ' + status);
           }
         });
       }
 
-      function showSteps(directionResult, markerArray, stepDisplay, map) {
-        // For each step, place a marker, and add the text to the marker's infowindow.
-        // Also attach the marker to an array so we can keep track of it and remove it
-        // when calculating new routes.
-        var myRoute = directionResult.routes[0].legs[0];
-        for (var i = 0; i < myRoute.steps.length; i++) {
-          var marker = markerArray[i] = markerArray[i] || new google.maps.Marker;
-          marker.setMap(map);
-          marker.setPosition(myRoute.steps[i].start_location);
-          attachInstructionText(
-              stepDisplay, marker, myRoute.steps[i].instructions, map);
-        }
-      }
+  // Commented out steps to clear up navigation screen
+      // function showSteps(directionResult, markerArray, stepDisplay, map) {
+      //   // For each step, place a marker, and add the text to the marker's infowindow.
+      //   // Also attach the marker to an array so we can keep track of it and remove it
+      //   // when calculating new routes.
+      //   var myRoute = directionResult.routes[0].legs[0];
+      //   for (var i = 0; i < myRoute.steps.length; i++) {
+      //     var marker = markerArray[i] = markerArray[i] || new google.maps.Marker;
+      //     marker.setMap(map);
+      //     marker.setPosition(myRoute.steps[i].start_location);
+      //     attachInstructionText(
+      //         stepDisplay, marker, myRoute.steps[i].instructions, map);
+      //   }
+      // }
 
       function attachInstructionText(stepDisplay, marker, text, map) {
         google.maps.event.addListener(marker, 'click', function() {

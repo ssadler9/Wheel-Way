@@ -33,9 +33,6 @@ $.ajax({
 
 })
 
-
-
-
 // labels and labelindex set for pins on google mpas
       var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
       var labelIndex = 0;
@@ -89,19 +86,38 @@ $.ajax({
           position: location,
           label: labels[labelIndex++ % labels.length],
           map: map
-        });
+          });
+        console.log(marker.label);
+
+      
+     console.log(location);
 
         // store the lat/lng into firebase
-        //console.log(location);
-       // console.log(location.lat, location.lng);
-
         database.ref().push({
           lat: location.lat,
-          lng: location.lng
+          lng: location.lng,
+          marker: marker.label,
         })
 
+      }
 
-      }  
+     
+      database.ref().on('child_added', function (snapshot) { 
+        // pulling pins from database and assign to varible
+        var barLat = snapshot.val().lat;
+        var barLng = snapshot.val().lng;
+        var location = {lat: barLat, lng: barLng};
+        var marker = new google.maps.Marker({
+          position: location,
+          label: labels[labelIndex++ % labels.length],
+          map: map
+        });
+
+      })
+   
+
+    // }
+
         // rest of code from google for navigation
       function calculateAndDisplayRoute(directionsDisplay, directionsService,
           markerArray, stepDisplay, map) {
@@ -153,16 +169,9 @@ $.ajax({
         });
       }
 
-      // Add to firebase 
-      database.ref().on("child_added", function(childSnapshot) {
-        //console.log(childSnapshot);
-        var droppedPin = childSnapshot.val();
-        console.log(droppedPin);
-        var point = new google.maps.LatLng(droppedPin);
-        console.log(point);
-        markerArray.getData().push(point);
-        $("#gmap").append(droppedPin);
-      })
 
 
-      // need a function that loops thru pins and appends to page
+
+
+
+

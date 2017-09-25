@@ -75,6 +75,7 @@ $.ajax({
         // copied from google for navigation
         document.getElementById('start').addEventListener('change', onChangeHandler);
         document.getElementById('end').addEventListener('change', onChangeHandler);
+
       }
 
       // Adds a marker to the map.
@@ -96,20 +97,136 @@ $.ajax({
 
       }
      
-      database.ref().on('child_added', function (snapshot) { 
-        // pulling pins from database and assign to varible
-        var barLat = snapshot.val().lat;
-        var barLng = snapshot.val().lng;
-        var location = {lat: barLat, lng: barLng};
-        var marker = new google.maps.Marker({
-          position: location,
-          // label: labels[labelIndex++ % labels.length],
-          map: map
-        });
-        console.log(location);
-       console.log()
+      database.ref().on('child_added', function(snapshot, userInput) {
+         // pulling pins from database and assign to varible
+         var barLat = snapshot.val().lat;
+         var barLng = snapshot.val().lng;
+         var location = { lat: barLat, lng: barLng };
+         var marker = new google.maps.Marker({
+             position: location,
+             // label: labels[labelIndex++ % labels.length],
+             map: map,
+         });
 
-      })
+         var contentString = '<div id="content">' +
+             '<div id="siteNotice">' +
+             '</div>' +
+             '<form>' +
+             '<form class="form-group">' +
+             '<h5 id="firstHeading" class="firstHeading">Choose Obstacle:</h5>' +
+             '<div id="bodyContent">' +
+             '<fieldset class="form-group">' +
+             '<div class="form-check">' +
+             '<label class="form-check-label">' +
+             '<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1">' +
+             '<p><b>Stairs</b>' +
+             '</label>' +
+             '</div>' +
+             '<div class="form-check">' +
+             '<label class="form-check-label">' +
+             '<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2">' +
+             '<p><b>Construction</b>' +
+             '</label>' +
+             '</div>' +
+             '<div class="form-check">' +
+             '<label class="form-check-label">' +
+             '<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios3" value="option3">' +
+             '<p><b>Rough Road</b>' +
+             '</label>' +
+             '</div>' +
+             '<div class="form-check">' +
+             '<label class="form-check-label">' +
+             '<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios4" value="option4">' +
+             '<p><b>Ramp</b>' +
+             '</label>' +
+             '</div>' +
+             '<div class="form-check">' +
+             '<label class="form-check-label">' +
+             '<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios5" value="option5">' +
+             '<p><b>Obstruction</b>' +
+             '</label>' +
+             '</div>' +
+             '<button type="submit" class="btn btn-primary">Submit</button>' +
+             '</form>' +
+             '</div>' +
+             '</div>';
+
+
+         var stairs = '<div id="content">' +
+             '<div id="siteNotice">' +
+             '</div>' +
+             '<h1 id="firstHeading" class="firstHeading">Stairs</h1>'+
+             '<div id="bodyContent">' +
+             '<p><b>Stairs</b>' +
+             '</div>'+
+             '</div>';
+
+        var construction = '<div id="content">' +
+             '<div id="siteNotice">' +
+             '</div>' +
+             '<h1 id="firstHeading" class="firstHeading">Construction</h1>'+
+             '<div id="bodyContent">' +
+             '<p><b>Construction</b>' +
+             '</div>'+
+             '</div>';
+
+        var roughRoad = '<div id="content">' +
+             '<div id="siteNotice">' +
+             '</div>' +
+             '<h1 id="firstHeading" class="firstHeading">Rough Road</h1>'+
+             '<div id="bodyContent">' +
+             '<p><b>Rough Road</b>' +
+             '</div>'+
+             '</div>';
+
+        var ramp = '<div id="content">' +
+             '<div id="siteNotice">' +
+             '</div>' +
+             '<h1 id="firstHeading" class="firstHeading">Ramp</h1>'+
+             '<div id="bodyContent">' +
+             '<p><b>Ramp</b>' +
+             '</div>'+
+             '</div>';
+
+        var obstruction = '<div id="content">' +
+             '<div id="siteNotice">' +
+             '</div>' +
+             '<h1 id="firstHeading" class="firstHeading">Obstruction</h1>'+
+             '<div id="bodyContent">' +
+             '<p><b>Obstruction</b>' +
+             '</div>'+
+             '</div>';
+   
+        console.log(userInput);
+
+         // sets variable into infoWindow
+        var infowindowSubmit = new google.maps.InfoWindow({
+             content: contentString
+          });
+        var infowindowStairs = new google.maps.InfoWindow ({
+            content: stairs
+          });
+        var infowindowConstruction = new google.maps.InfoWindow ({
+            content: construction
+          });
+        var infowindowRR = new google.maps.InfoWindow ({
+            content: roughRoad
+          });
+        var infowindowRamp = new google.maps.InfoWindow ({
+            content: ramp
+          });
+        var infowindowObstruction = new google.maps.InfoWindow ({
+            content: obstruction
+          });
+
+
+
+         // marker listens for click to display infoWindow
+         marker.addListener('click', function() {
+             infowindowSubmit.open(map, marker);
+         })
+
+        })
 
         // rest of code from google for navigation
       function calculateAndDisplayRoute(directionsDisplay, directionsService,

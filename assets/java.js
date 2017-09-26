@@ -173,7 +173,8 @@ $.ajax({
 
       }
      
-      database.ref().on('child_added', function(snapshot, userInput) {
+      database.ref().on('child_added', function(snapshot) {
+        console.log(snapshot.val())
          // pulling pins from database and assign to varible
          var barLat = snapshot.val().lat;
          var barLng = snapshot.val().lng;
@@ -231,7 +232,7 @@ $.ajax({
              '<div id="bodyContent">' +
              '<p><b>Obstruction</b>' +
              '</div>'+
-             '</div>';
+             '</div>';         
 
          // sets variable into infoWindow
 
@@ -250,6 +251,22 @@ $.ajax({
         var infowindowObstruction = new google.maps.InfoWindow ({
             content: obstruction
           });
+
+        google.maps.event.addListener(marker, 'click', function(event) {
+          // if/else to display correct inforWindow
+          if (snapshot.val().userchoice === "Stairs") {
+            infowindowStairs.open(map, marker);
+            console.log('stairs');
+          } else if (snapshot.val().userchoice === "Construction") {
+            infowindowConstruction.open(map, marker);
+          } else if (snapshot.val().userchoice === "roughRoad") {
+            infowindowRR.open(map, marker);
+          } else if (snapshot.val().userchoice === "Ramp") {
+            infowindowRamp.open(map, marker);
+          } else if (snapshot.val().userchoice === "Obstruction") {
+            infowindowObstruction.open(map, marker);
+          }
+        }) 
 
          // marker listens for click to display infoWindow
 
@@ -277,6 +294,7 @@ $.ajax({
          // }
          // ===
         });
+
 
 
 

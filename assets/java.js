@@ -174,7 +174,19 @@ $.ajax({
       }
      
       database.ref().on('child_added', function(snapshot) {
-        console.log(snapshot.val())
+        var theImage;
+        if (snapshot.val().userchoice === "Stairs") {
+          theImage = 'http://oi65.tinypic.com/2aewh93.jpg';
+        } else if (snapshot.val().userchoice === "Construction") {
+          theImage = 'http://oi68.tinypic.com/2zywmk4.jpg';
+        } else if (snapshot.val().userchoice === "roughRoad") {
+          theImage = 'http://oi64.tinypic.com/vo4abq.jpg';
+        } else if (snapshot.val().userchoice === "Ramp") {
+          theImage = 'http://oi64.tinypic.com/2ujtamh.jpg';
+        } else if (snapshot.val().userchoice === "Obstruction") {
+          theImage = 'http://oi65.tinypic.com/ml0f15.jpg';
+        }
+        
          // pulling pins from database and assign to varible
          var barLat = snapshot.val().lat;
          var barLng = snapshot.val().lng;
@@ -184,7 +196,7 @@ $.ajax({
              // label: labels[labelIndex++ % labels.length],
              thisexists:true,
              map: map,
-             // icon:
+             icon: theImage
          });
 
 
@@ -252,47 +264,22 @@ $.ajax({
             content: obstruction
           });
 
-        google.maps.event.addListener(marker, 'click', function(event) {
-          // if/else to display correct inforWindow
-          if (snapshot.val().userchoice === "Stairs") {
-            infowindowStairs.open(map, marker);
-            console.log('stairs');
-          } else if (snapshot.val().userchoice === "Construction") {
-            infowindowConstruction.open(map, marker);
-          } else if (snapshot.val().userchoice === "roughRoad") {
-            infowindowRR.open(map, marker);
-          } else if (snapshot.val().userchoice === "Ramp") {
-            infowindowRamp.open(map, marker);
-          } else if (snapshot.val().userchoice === "Obstruction") {
-            infowindowObstruction.open(map, marker);
-          }
-        }) 
+        // custom icon images
+        // var stairsImg = 'https://d30y9cdsu7xlg0.cloudfront.net/png/14451-200.png';
+        // stairsImg.attr('src', 'assets/images/Stairs.png');
+        // google.maps.event.addListener(marker, 'click', function(event) {
+        //   // if/else to display correct inforWindow
+        //   } else if (snapshot.val().userchoice === "Construction") {
+        //     infowindowConstruction.open(map, marker);
+        //   } else if (snapshot.val().userchoice === "roughRoad") {
+        //     infowindowRR.open(map, marker);
+        //   } else if (snapshot.val().userchoice === "Ramp") {
+        //     infowindowRamp.open(map, marker);
+        //   } else if (snapshot.val().userchoice === "Obstruction") {
+        //     infowindowObstruction.open(map, marker);
+        //   }
+        // }) 
 
-         // marker listens for click to display infoWindow
-
-         // marker.addListener('click', function() {
-         //        infowindowSubmit.open(map, marker);
-         //        console.log(marker.position.lat());
-         //        var position = {
-         //          lat: marker.position.lat(),
-         //          lng: marker.position.lng()
-         //        };
-         //        $("#userSubmit").on('click', function() {
-         //          database.ref().push({
-         //                  lat: position.lat,
-         //                  lng: position.lng,
-         //                  // marker: marker.label,
-         //                })                  
-         //        })
-         // })
-
-         // testing if/else to display alternate infoWindows
-         // if (document.getElementById('options1')) {
-         //     location.addListener('click', function() {
-         //      infowindowStairs.open(map, marker);
-         //     })
-         // }
-         // ===
         });
 
 

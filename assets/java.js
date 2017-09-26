@@ -252,6 +252,7 @@ $.ajax({
           });
 
          // marker listens for click to display infoWindow
+
          // marker.addListener('click', function() {
          //        infowindowSubmit.open(map, marker);
          //        console.log(marker.position.lat());

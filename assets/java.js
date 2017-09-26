@@ -15,7 +15,7 @@ var database = firebase.database();
 
 // Weather API/AJAX call
 var weatherAPIKey = "a910455ef73b594f1148b29789a79ba8";
-var queryURL = "http://api.openweathermap.org/data/2.5/weather?" +
+var queryURL = "https://api.openweathermap.org/data/2.5/weather?" +
       "q=austin,us&units=imperial&appid=" + weatherAPIKey;
 
 $.ajax({
@@ -26,7 +26,7 @@ $.ajax({
 
   $("#city").html(response.name);
   $("#description").html(response.weather[0].description);
-  $("#weather_img").attr("src", "http://openweathermap.org/img/w/" + response.weather[0].icon + ".png");
+  $("#weather_img").attr("src", "https://openweathermap.org/img/w/" + response.weather[0].icon + ".png");
   $("#temp").prepend(response.main.temp);
 
 })
@@ -64,10 +64,90 @@ $.ajax({
 
         // This event listener calls addMarker() when the map is clicked.
         google.maps.event.addListener(map, 'click', function(event) {
-          addMarker({
-            lat: event.latLng.lat(),
-            lng: event.latLng.lng()
-          }, map);
+          // addMarker({
+          //   lat: event.latLng.lat(),
+          //   lng: event.latLng.lng()
+          // }, map);
+
+            var marker = new google.maps.Marker({
+              position: {
+                lat: event.latLng.lat(),
+                lng: event.latLng.lng()
+              },
+              map: map
+            })
+          google.maps.event.addListener(marker, "click", function(event){
+            console.log(event);
+            console.log(this);
+
+         var contentString = '<div id="content">' +
+             '<div id="siteNotice">' +
+             '</div>' +
+             '<form>' +
+             '<form class="form-group">' +
+             '<h5 id="firstHeading" class="firstHeading">Choose Obstacle:</h5>' +
+             '<div id="bodyContent">' +
+             '<fieldset class="form-group">' +
+             '<div class="form-check">' +
+             '<label class="form-check-label">' +
+             '<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="Stairs">' +
+             '<p><b>Stairs</b>' +
+             '</label>' +
+             '</div>' +
+             '<div class="form-check">' +
+             '<label class="form-check-label">' +
+             '<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="Construction">' +
+             '<p><b>Construction</b>' +
+             '</label>' +
+             '</div>' +
+             '<div class="form-check">' +
+             '<label class="form-check-label">' +
+             '<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios3" value="roughRoad">' +
+             '<p><b>Rough Road</b>' +
+             '</label>' +
+             '</div>' +
+             '<div class="form-check">' +
+             '<label class="form-check-label">' +
+             '<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios4" value="Ramp">' +
+             '<p><b>Ramp</b>' +
+             '</label>' +
+             '</div>' +
+             '<div class="form-check">' +
+             '<label class="form-check-label">' +
+             '<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios5" value="Obstruction">' +
+             '<p><b>Obstruction</b>' +
+             '</label>' +
+             '</div>' +
+             '<button type="submit" id="userSubmit" class="btn btn-primary">Submit</button>' +
+             '</form>' +
+             '</div>' +
+             '</div>';
+
+        var infowindowSubmit = new google.maps.InfoWindow({
+             content: contentString
+          });
+
+
+
+
+            infowindowSubmit.open(map, marker);
+                console.log(marker.position.lat());
+                var position = {
+                  lat: marker.position.lat(),
+                  lng: marker.position.lng()
+                };
+
+                $("#userSubmit").on('click', function() {
+                  var theirChoice = 'input:radio[name=optionsRadios]:checked';
+                  console.log(theirChoice);
+                  database.ref().push({
+                          lat: position.lat,
+                          lng: position.lng,
+                          // marker: marker.label,
+                          userchoice: $(theirChoice).val()
+                        })                  
+                })
+          })
         });
         // Add a marker at the center of the map.
         // addMarker(utTower, map);
@@ -75,6 +155,8 @@ $.ajax({
         // copied from google for navigation
         document.getElementById('start').addEventListener('change', onChangeHandler);
         document.getElementById('end').addEventListener('change', onChangeHandler);
+
+
 
       }
 
@@ -88,12 +170,6 @@ $.ajax({
           map: map
           });
 
-        // store the lat/lng into firebase
-        database.ref().push({
-          lat: location.lat,
-          lng: location.lng,
-          // marker: marker.label,
-        })
 
       }
      
@@ -105,51 +181,11 @@ $.ajax({
          var marker = new google.maps.Marker({
              position: location,
              // label: labels[labelIndex++ % labels.length],
+             thisexists:true,
              map: map,
+             // icon:
          });
 
-         var contentString = '<div id="content">' +
-             '<div id="siteNotice">' +
-             '</div>' +
-             '<form>' +
-             '<form class="form-group">' +
-             '<h5 id="firstHeading" class="firstHeading">Choose Obstacle:</h5>' +
-             '<div id="bodyContent">' +
-             '<fieldset class="form-group">' +
-             '<div class="form-check">' +
-             '<label class="form-check-label">' +
-             '<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1">' +
-             '<p><b>Stairs</b>' +
-             '</label>' +
-             '</div>' +
-             '<div class="form-check">' +
-             '<label class="form-check-label">' +
-             '<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2">' +
-             '<p><b>Construction</b>' +
-             '</label>' +
-             '</div>' +
-             '<div class="form-check">' +
-             '<label class="form-check-label">' +
-             '<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios3" value="option3">' +
-             '<p><b>Rough Road</b>' +
-             '</label>' +
-             '</div>' +
-             '<div class="form-check">' +
-             '<label class="form-check-label">' +
-             '<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios4" value="option4">' +
-             '<p><b>Ramp</b>' +
-             '</label>' +
-             '</div>' +
-             '<div class="form-check">' +
-             '<label class="form-check-label">' +
-             '<input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios5" value="option5">' +
-             '<p><b>Obstruction</b>' +
-             '</label>' +
-             '</div>' +
-             '<button type="submit" class="btn btn-primary">Submit</button>' +
-             '</form>' +
-             '</div>' +
-             '</div>';
 
 
          var stairs = '<div id="content">' +
@@ -196,13 +232,9 @@ $.ajax({
              '<p><b>Obstruction</b>' +
              '</div>'+
              '</div>';
-   
-        console.log(userInput);
 
          // sets variable into infoWindow
-        var infowindowSubmit = new google.maps.InfoWindow({
-             content: contentString
-          });
+
         var infowindowStairs = new google.maps.InfoWindow ({
             content: stairs
           });
@@ -219,15 +251,34 @@ $.ajax({
             content: obstruction
           });
 
-
-
          // marker listens for click to display infoWindow
-         marker.addListener('click', function() {
-             infowindowSubmit.open(map, marker);
-             console.log(this);
-         })
 
-        })
+         // marker.addListener('click', function() {
+         //        infowindowSubmit.open(map, marker);
+         //        console.log(marker.position.lat());
+         //        var position = {
+         //          lat: marker.position.lat(),
+         //          lng: marker.position.lng()
+         //        };
+         //        $("#userSubmit").on('click', function() {
+         //          database.ref().push({
+         //                  lat: position.lat,
+         //                  lng: position.lng,
+         //                  // marker: marker.label,
+         //                })                  
+         //        })
+         // })
+
+         // testing if/else to display alternate infoWindows
+         // if (document.getElementById('options1')) {
+         //     location.addListener('click', function() {
+         //      infowindowStairs.open(map, marker);
+         //     })
+         // }
+         // ===
+        });
+
+
 
         // rest of code from google for navigation
       function calculateAndDisplayRoute(directionsDisplay, directionsService,

@@ -176,15 +176,15 @@ $.ajax({
       database.ref().on('child_added', function(snapshot) {
         var theImage;
         if (snapshot.val().userchoice === "Stairs") {
-          theImage = 'http://oi65.tinypic.com/2aewh93.jpg';
+          theImage = 'http://oi68.tinypic.com/156s7wp.jpg';
         } else if (snapshot.val().userchoice === "Construction") {
-          theImage = 'http://oi68.tinypic.com/2zywmk4.jpg';
+          theImage = 'http://oi68.tinypic.com/10o2plh.jpg';
         } else if (snapshot.val().userchoice === "roughRoad") {
-          theImage = 'http://oi64.tinypic.com/vo4abq.jpg';
+          theImage = 'http://oi63.tinypic.com/fbkmbq.jpg';
         } else if (snapshot.val().userchoice === "Ramp") {
-          theImage = 'http://oi64.tinypic.com/2ujtamh.jpg';
+          theImage = 'http://oi67.tinypic.com/2dul6ia.jpg';
         } else if (snapshot.val().userchoice === "Obstruction") {
-          theImage = 'http://oi65.tinypic.com/ml0f15.jpg';
+          theImage = 'http://oi63.tinypic.com/2rxdwk0.jpg';
         }
         
          // pulling pins from database and assign to varible

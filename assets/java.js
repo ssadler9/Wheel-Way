@@ -218,4 +218,3 @@ function attachInstructionText(stepDisplay, marker, text, map) {
 
 
 
-
